@@ -64,6 +64,6 @@ jobs:
       - name: Upload APK to Firebase App Distribution
         run: |
           ./node_modules/.bin/firebase appdistribution:distribute android/app/build/outputs/apk/release/app-release.apk \
-            --app <1:953596702137:android:ca98cb80ca19f1ec1a1a68> \
+            --app 1:953596702137:android:ca98cb80ca19f1ec1a1a68 \
             --token ${{ secrets.FIREBASE_TOKEN }} \
             --groups "internal-testers"
