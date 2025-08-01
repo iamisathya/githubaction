@@ -1,4 +1,4 @@
-package com.githubaction
+package com.insanetechie.nunitiumnews
 
 import android.app.Application
 import com.facebook.react.PackageList
