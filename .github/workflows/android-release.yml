@@ -61,9 +61,22 @@ jobs:
         run: |
           curl -sL https://firebase.tools | bash
 
+      - name: Get last commit message
+        id: get_commit
+        run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+
+      - name: Auto-increment versionCode
+        run: |
+          build_gradle_file="android/app/build.gradle"
+          version_code=$(grep versionCode $build_gradle_file | awk '{print $2}')
+          new_version_code=$((version_code + 1))
+          echo "Updating versionCode from $version_code to $new_version_code"
+          sed -i.bak "s/versionCode $version_code/versionCode $new_version_code/" $build_gradle_file
+
       - name: Upload APK to Firebase App Distribution
         run: |
           firebase appdistribution:distribute android/app/build/outputs/apk/release/app-release.apk \
             --app 1:953596702137:android:ca98cb80ca19f1ec1a1a68 \
             --token ${{ secrets.FIREBASE_TOKEN }} \
-            --groups "internal-testers"
+            --groups "internal-testers" \
+            --release-notes "${{ steps.get_commit.outputs.message }}"
