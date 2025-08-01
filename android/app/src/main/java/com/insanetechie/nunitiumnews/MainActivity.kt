@@ -1,4 +1,4 @@
-package com.githubaction
+package com.insanetechie.nunitiumnews
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
